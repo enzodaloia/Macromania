@@ -50,4 +50,29 @@ function addProduct($title, $description, $platform, $image, $released_at, $pric
         die("Erreur lors de l'ajout de l'article : " . $e->getMessage());
     }
 }
+
+function supprimerProduit($idProduct) {
+    global $pdo;
+    try {
+        // Étape 1 : Préparez la requête SQL pour supprimer le produit
+        $sql = "DELETE FROM product WHERE id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':id', $idProduct, PDO::PARAM_INT);
+
+        // Étape 2 : Exécutez la requête
+        if ($stmt->execute()) {
+            // La suppression a réussi
+            return true;
+        } else {
+            // La suppression a échoué
+            return false;
+        }
+    } catch (PDOException $e) {
+        // Gestion des erreurs
+        echo "Erreur : " . $e->getMessage();
+        return false;
+    }
+}
+
+
 ?>

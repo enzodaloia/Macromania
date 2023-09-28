@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fr">
   <head>
@@ -22,10 +25,15 @@
             <a class="nav-link" href="add_articles.php">Ajouter des articles</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="connexion.php">Connexion</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="inscription.php">Inscription</a>
+            <?php 
+              if (isset($_SESSION['username'])) {
+                  // L'utilisateur est connecté, affichez le lien de déconnexion
+                  echo ' <a class="nav-link" href="deconnexion.php">Se déconnecter</a>';
+              } else {
+                  // L'utilisateur n'est pas connecté, affichez un lien de connexion
+                  echo '<a class="nav-link" href="connexion.php">Se connecter</a>';
+              }
+            ?>
             </li>
         </ul>
         </div>

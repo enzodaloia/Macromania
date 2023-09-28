@@ -19,7 +19,8 @@ include '../templates/default-layout.php';
                     <div class="card-body">
                         <h5 class="card-title"><?php echo "<h2>" . htmlspecialchars($product['title']) . "</h2>"; ?></h5>
                         <p class="card-text"><?php echo "<p>" . htmlspecialchars($product['description']) . "</p>"; ?></p>
-                        <a href="./article.php?id=<?= htmlspecialchars($product['id']) ?>">Voir plus</a>
+                        <a href="./article.php?id=<?= htmlspecialchars($product['id']) ?>" class="btn btn-primary">Voir plus</a>
+                        <a href="./sup_articles.php?id=<?= htmlspecialchars($product['id']) ?>" class="btn btn-danger">Supprimer</a>
                     </div>
                 </div>
             </div>
