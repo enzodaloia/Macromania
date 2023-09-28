@@ -6,7 +6,6 @@ include '../templates/default-layout.php';
 if (!isset($_SESSION['panier'])) {
     $_SESSION['panier'] = [];
 }
-var_dump($_SESSION['panier']);
 ?>
 
 <div class="container">
@@ -18,6 +17,10 @@ var_dump($_SESSION['panier']);
                 <?php foreach ($_SESSION['panier'] as $product) : ?>
                     <li>
                         <?php echo $product['title']; ?> - <?php echo $product['price']; ?>
+                        <form method="POST" action="retirer-du-panier.php">
+                            <input type="hidden" name="index" value="<?php echo $index; ?>">
+                            <button type="submit" name="retirer-du-panier">Supprimer</button>
+                        </form>
                     </li>
                 <?php endforeach; ?>
             </ul>

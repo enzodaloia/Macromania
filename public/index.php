@@ -3,13 +3,9 @@ require_once '../function.php';
 include '../templates/default-layout.php';
 
 // Vérifiez si le formulaire a été soumis et si l'ajout au panier a été déclenché
-var_dump($_POST);
-var_dump($_SERVER['REQUEST_METHOD']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter-au-panier'])) {
-    var_dump('coucou1');
     // Vérifiez si les données nécessaires sont présentes
     if (isset($_POST['title']) && isset($_POST['price'])) {
-        var_dump('test');
         $nomProduit = $_POST['title'];
         $prixProduit = $_POST['price'];
 
