@@ -3,56 +3,51 @@ require_once '../function.php';
 include '../templates/default-layout.php';
 
 // Vérifiez si le formulaire a été soumis et si l'ajout au panier a été déclenché
+var_dump($_POST);
+var_dump($_SERVER['REQUEST_METHOD']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter-au-panier'])) {
+    var_dump('coucou1');
     // Vérifiez si les données nécessaires sont présentes
     if (isset($_POST['title']) && isset($_POST['price'])) {
+        var_dump('test');
         $nomProduit = $_POST['title'];
         $prixProduit = $_POST['price'];
 
         // Ajoutez le produit au tableau de session du panier
-        $_SESSION['panier'][] = array('title' => $nomProduit, 'price' => $prixProduit);
+        $_SESSION['panier'][] = [
+            'title' => $nomProduit,
+            'price' => $prixProduit
+        ];
     } else {
         // Gérer le cas où les données sont manquantes
         echo "Données de produit manquantes.";
     }
 }
-var_dump($_POST['title']);
 ?>
 
 <div class="container">
     <div class="col-md-12">
         <div class="row">
-            <?php 
-            $count = 0;
-            foreach ($products as $product) { 
-                if ($count % 3 === 0) {
-                    // Début d'une nouvelle ligne après chaque troisième produit
-                    echo '</div><div class="row">';
-                }
-            ?>
+            <?php foreach ($products as $product) :?>
             <div class="col-md-4 d-flex">
                 <div class="card h-100 w-100">
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo "<h2>" . htmlspecialchars($product['title']) . "</h2>"; ?></h5>
-                        <p class="card-text"><?php echo "<p>" . htmlspecialchars($product['description']) . "</p>"; ?></p>
-                        <a href="./article.php?id=<?= htmlspecialchars($product['id']) ?>" class="btn btn-primary">Voir plus</a>
+                        <h5 class="card-title"><?php echo "<h2>" . $product['title'] . "</h2>"; ?></h5>
+                        <p class="card-text"><?php echo "<p>" . $product['description'] . "</p>"; ?></p>
+                        <a href="./article.php?id=<?= $product['id'] ?>" class="btn btn-primary">Voir plus</a>
                         <?php if (isset($_SESSION['username'])) : ?>
-                            <a class="btn btn-danger" href="./sup_articles.php?id=<?= htmlspecialchars($product['id']) ?>">Supprimer</a>
+                            <a class="btn btn-danger" href="./sup_articles.php?id=<?= $product['id'] ?>">Supprimer</a>
                         <?php endif ?>
                         <!-- Utilisez des classes et des attributs de données pour le bouton -->
                         <form method="POST">
-                            <input type="hidden" name="title" value="<?php $product['title'] ?>">
-                            <input type="hidden" name="price" value="<?php $product['price'] ?>">
+                            <input type="hidden" name="title" value="<?= $product['title'] ?>">
+                            <input type="hidden" name="price" value="<?= $product['price'] ?>">
                             <button type="submit" name="ajouter-au-panier">Ajouter au panier</button>
-                            <?php var_dump($product['price']);var_dump($product['title']); ?>
                         </form>
                     </div>
                 </div>
             </div>
-            <?php 
-                $count++;
-            } 
-            ?>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
