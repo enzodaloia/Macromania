@@ -1,7 +1,24 @@
 <?php
 require_once '../function.php';
 include '../templates/default-layout.php';
+
+// Vérifiez si le formulaire a été soumis et si l'ajout au panier a été déclenché
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajouter-au-panier'])) {
+    // Vérifiez si les données nécessaires sont présentes
+    if (isset($_POST['title']) && isset($_POST['price'])) {
+        $nomProduit = $_POST['title'];
+        $prixProduit = $_POST['price'];
+
+        // Ajoutez le produit au tableau de session du panier
+        $_SESSION['panier'][] = array('title' => $nomProduit, 'price' => $prixProduit);
+    } else {
+        // Gérer le cas où les données sont manquantes
+        echo "Données de produit manquantes.";
+    }
+}
+var_dump($_POST['title']);
 ?>
+
 <div class="container">
     <div class="col-md-12">
         <div class="row">
@@ -20,10 +37,15 @@ include '../templates/default-layout.php';
                         <p class="card-text"><?php echo "<p>" . htmlspecialchars($product['description']) . "</p>"; ?></p>
                         <a href="./article.php?id=<?= htmlspecialchars($product['id']) ?>" class="btn btn-primary">Voir plus</a>
                         <?php if (isset($_SESSION['username'])) : ?>
-                                <a class="btn btn-danger" href="./sup_articles.php?id=<?= htmlspecialchars($product['id']) ?>">Supprimer</a>
+                            <a class="btn btn-danger" href="./sup_articles.php?id=<?= htmlspecialchars($product['id']) ?>">Supprimer</a>
                         <?php endif ?>
-                        <button id="ajouter-au-panier" data-id-produit="<?= htmlspecialchars($product['id']) ?>" data-prix="<?= htmlspecialchars($product['price']) ?>">Ajouter au panier</button>
-            
+                        <!-- Utilisez des classes et des attributs de données pour le bouton -->
+                        <form method="POST">
+                            <input type="hidden" name="title" value="<?php $product['title'] ?>">
+                            <input type="hidden" name="price" value="<?php $product['price'] ?>">
+                            <button type="submit" name="ajouter-au-panier">Ajouter au panier</button>
+                            <?php var_dump($product['price']);var_dump($product['title']); ?>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -34,17 +56,42 @@ include '../templates/default-layout.php';
         </div>
     </div>
 </div>
-<script>
-    // Code JavaScript pour gérer l'ajout au panier
-    document.getElementById('ajouter-au-panier').addEventListener('click', function() {
+
+<!-- <script>
+    function ajouterAuPanier(nom, prix) {
+    var panier = document.getElementById('panier');
+
+    // Créez un élément de carte pour le produit ajouté
+    var produitCarte = document.createElement('div');
+    produitCarte.classList.add('carte-produit'); // Ajoutez une classe pour le style CSS
+
+    var nomProduit = document.createElement('h3');
+    nomProduit.textContent = nom;
+
+    var prixProduit = document.createElement('p');
+    prixProduit.textContent = '$' + prix;
+
+    // Ajoutez les éléments au composant de carte
+    produitCarte.appendChild(nomProduit);
+    produitCarte.appendChild(prixProduit);
+
+    // Ajoutez le composant de carte au panier
+    panier.appendChild(produitCarte);
+}
+// Code pour gérer les clics sur les boutons "Ajouter au panier"
+var boutonsAjouterAuPanier = document.querySelectorAll('.ajouter-au-panier');
+
+boutonsAjouterAuPanier.forEach(function(bouton) {
+    bouton.addEventListener('click', function() {
         var idProduit = this.getAttribute('data-id-produit');
         var prix = parseFloat(this.getAttribute('data-prix'));
         var quantite = 1; // Vous pouvez ajuster la quantité selon vos besoins
 
-        // Appelez la fonction pour ajouter le produit au panier
+        // Appeler la fonction pour ajouter le produit au panier
         ajouterAuPanier(idProduit, quantite, prix);
 
-        // Affichez un message ou effectuez toute autre action nécessaire
+        // Afficher un message ou effectuer d'autres actions nécessaires
         alert('Produit ajouté au panier.');
     });
-</script>
+});
+</script> -->
