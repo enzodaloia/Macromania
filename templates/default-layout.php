@@ -22,7 +22,19 @@ session_start();
             <a class="nav-link active" aria-current="page" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="add_articles.php">Ajouter des articles</a>
+            <?php 
+              if (isset($_SESSION['username'])) {
+                  echo ' <a class="nav-link" href="add_articles.php">Ajouter des articles</a>';
+              }
+            ?>
+            </li>
+            <li class="nav-item">
+              <?php
+                if (isset($_SESSION['username'])) {
+                  // L'utilisateur est connecté, affichez le lien de déconnexion
+                  echo ' <a class="nav-link" href="panier.php">Panier</a>';
+                } 
+              ?>
             </li>
             <li class="nav-item">
             <?php 

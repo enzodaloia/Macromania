@@ -13,6 +13,8 @@
         <input type="password" name="password" required><br><br>
         
         <input type="submit" value="Se connecter">
+        <p>Pas de compte ? <a href="inscription.php">Enregistrez vous !</a></p>
     </form>
 </body>
 </html>
+

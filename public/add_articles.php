@@ -3,7 +3,7 @@ require_once '../function.php';
 include '../templates/default-layout.php';
 
 if (isset($_POST['title'])) {
-    $id = htmlspecialchars(trim($_POST['id']));
+    // $id = htmlspecialchars(trim($_POST['id']));
     $title = htmlspecialchars(trim($_POST['title']));
     $description = htmlspecialchars(trim($_POST['description']));
     $platform = htmlspecialchars(trim($_POST['platform']));
