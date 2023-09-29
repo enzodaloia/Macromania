@@ -17,7 +17,7 @@ if (!isset($_SESSION['panier'])) {
                 <?php foreach ($_SESSION['panier'] as $product) : ?>
                     <li>
                         <?php echo $product['title']; ?> - <?php echo $product['price']; ?>
-                        <form method="POST" action="retirer-du-panier.php">
+                        <form method="POST" action="./retirer_du_panier.php">
                             <input type="hidden" name="index" value="<?php echo $index; ?>">
                             <button type="submit" name="retirer-du-panier">Supprimer</button>
                         </form>
